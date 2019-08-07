@@ -1,5 +1,4 @@
 import React from "react";
-import { calculateWinner } from "./utils";
 
 function Square(props) {
   return (
@@ -36,30 +35,21 @@ function Board(props) {
 }
 
 export function Game(props) {
-  const history = props.history;
-  const current = history[props.stepNumber];
-  const winner = calculateWinner(current.squares);
+  const { history, current, status, jumpTo, handleClick } = props;
 
   const moves = history.map((step, move) => {
     const desc = move ? `Go to move #` + move : "Go to game start";
     return (
       <li key={move}>
-        <button onClick={() => props.jumpTo(move)}>{desc}</button>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
       </li>
     );
   });
 
-  let status;
-  if (winner) {
-    status = "Winner: " + winner;
-  } else {
-    status = "Next player: " + (props.xIsNext ? "X" : "O");
-  }
-
   return (
     <div className="game">
       <div className="game-board">
-        <Board squares={current.squares} onClick={i => props.handleClick(i)} />
+        <Board squares={current.squares} onClick={i => handleClick(i)} />
       </div>
       <div className="game-info">
         <div>{status}</div>
