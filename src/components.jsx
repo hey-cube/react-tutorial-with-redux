@@ -1,4 +1,5 @@
 import React from "react";
+import { BoardContainer } from "./containers";
 
 function Square(props) {
   return (
@@ -8,9 +9,11 @@ function Square(props) {
   );
 }
 
-function Board(props) {
+export function Board(props) {
   function renderSquare(i) {
-    return <Square value={props.squares[i]} onClick={() => props.onClick(i)} />;
+    return (
+      <Square value={props.squares[i]} onClick={() => props.handleClick(i)} />
+    );
   }
 
   return (
@@ -35,7 +38,7 @@ function Board(props) {
 }
 
 export function Game(props) {
-  const { history, current, status, jumpTo, handleClick } = props;
+  const { history, status, jumpTo } = props;
 
   const moves = history.map((step, move) => {
     const desc = move ? `Go to move #` + move : "Go to game start";
@@ -49,7 +52,7 @@ export function Game(props) {
   return (
     <div className="game">
       <div className="game-board">
-        <Board squares={current.squares} onClick={i => handleClick(i)} />
+        <BoardContainer />
       </div>
       <div className="game-info">
         <div>{status}</div>
