@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { clickSquare, jumpToPast } from "./actions";
 import { Game, Board } from "./components";
+import { gameCreators } from "./mutations";
 import { calculateWinner } from "./utils";
 
 /*
@@ -25,7 +25,7 @@ const mapStateToPropsForGame = (state, ownProps) => {
 const mapDispatchToPropsForGame = (dispatch, ownProps) => {
   return {
     jumpTo: step => {
-      dispatch(jumpToPast(step));
+      dispatch(gameCreators.jumpToPast(step));
     }
   };
 };
@@ -49,7 +49,7 @@ const mapStateToPropsForBoard = (state, ownProps) => {
 const mapDispatchToPropsForBoard = (dispatch, ownProps) => {
   return {
     handleClick: index => {
-      dispatch(clickSquare(index));
+      dispatch(gameCreators.clickSquare(index));
     }
   };
 };
