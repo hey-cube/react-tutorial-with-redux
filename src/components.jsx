@@ -1,6 +1,17 @@
 import React from "react";
 import { BoardContainer } from "./containers";
 
+function Information(props) {
+  return (
+    <div className="information">
+      <ul>
+        <li>IPアドレス：xxx</li>
+        <li>国籍：xxx</li>
+      </ul>
+    </div>
+  );
+}
+
 function Square(props) {
   return (
     <button className="square" onClick={() => props.onClick()}>
@@ -50,13 +61,16 @@ export function Game(props) {
   });
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <BoardContainer />
-      </div>
-      <div className="game-info">
-        <div>{status}</div>
-        <ol>{moves}</ol>
+    <div>
+      <Information />
+      <div className="game">
+        <div className="game-board">
+          <BoardContainer />
+        </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ol>{moves}</ol>
+        </div>
       </div>
     </div>
   );
