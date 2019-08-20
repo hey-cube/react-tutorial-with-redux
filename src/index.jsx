@@ -2,13 +2,21 @@ import React from "react";
 import { render } from "react-dom";
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { gameReducer } from "./mutations";
+import { gameReducer, informationReducer } from "./mutations";
 import { GameContainer } from "./containers";
 import { logger } from "./middlewares";
+import { combineEpics, createEpicMiddleware } from "redux-observable";
+import { informationEpics } from "./epics";
 import "./index.css";
 
-const app = combineReducers({ game: gameReducer });
-const store = createStore(app, applyMiddleware(logger));
+const epic = combineEpics(...informationEpics);
+const reducer = combineReducers({
+  game: gameReducer,
+  information: informationReducer
+});
+const epicMiddleware = createEpicMiddleware();
+const store = createStore(reducer, applyMiddleware(logger, epicMiddleware));
+epicMiddleware.run(epic);
 
 render(
   <Provider store={store}>

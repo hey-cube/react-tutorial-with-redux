@@ -1,12 +1,20 @@
-import React from "react";
-import { BoardContainer } from "./containers";
+import React, { useEffect } from "react";
+import { BoardContainer, InformationContainer } from "./containers";
 
-function Information(props) {
+export function Information(props) {
+  const { fetchInformation, ipAddress, country } = props;
+
+  useEffect(() => {
+    fetchInformation();
+    // fetchInformation() は一回だけ実行できれば良い
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="information">
       <ul>
-        <li>IPアドレス：xxx</li>
-        <li>国籍：xxx</li>
+        <li>IPアドレス：{ipAddress}</li>
+        <li>国籍：{country}</li>
       </ul>
     </div>
   );
@@ -62,7 +70,7 @@ export function Game(props) {
 
   return (
     <div>
-      <Information />
+      <InformationContainer />
       <div className="game">
         <div className="game-board">
           <BoardContainer />
